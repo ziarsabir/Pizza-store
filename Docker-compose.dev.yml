@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    container_name: pizza-store-dev
+    user: node
+    working_dir: /node/app
+    volumes:
+      - ./public:/node/app/public
+      - ./src:/node/app/src
+    ports:
+      - "3000:3000"
+    command: ["npm", "run", "dev"]
+    

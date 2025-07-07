@@ -1,0 +1,143 @@
+- Look at Material UI page 
+- Look at modal section 
+- Look at layouts - especially containers and grids - RESPONSIVE design 
+
+- Think about page layouts as HTML first. Then into React components. 
+Think back to createTaskView function and the HTML template variable within it.
+- Add Business name to a global variable
+- Add right shadow to today's specials so the special items look like they're popping out in 2D 
+- Change the font colour of Menu to white and play with it - be consistent with colour scheme 
+- Wrap menu in white box in comparison to red section background 
+- Add the input for add to cart 
+- Add a cart page 
+    Add shopping cart item to main header 
+    Cart list which contains the item, price, quantity and total 
+    Summary part at bottom of the cart which contains total, coupon code and checkout button
+    Add scrollbar if there are more than 4 items in the cart list 
+    If feeling confident add 'previous or favourite orders' feature to the cart
+    Could add upsell feature to the cart - for limited time specials I'm having on 
+- Checkout 
+    Will be displayed as pop up box over the cart page 
+    Name and address, phone number fields required before credit card info
+    Tailwind Credit Card form field design 
+    In same section can have paypal feature (pay in 4 for other e-commerce web app) 
+    Popup in top of checkout box to let customer know its taking tame for payment to process 
+ - Revise the menu item li to a seperate component 
+ - Menu Item 
+    Once I've added something to the cart give the user the option of increasing or decreasing cart quantity on the menu item itself
+    Once HTML within React has been duplicated it needs to be moved out to a COMPONENT - avoids duplicates 
+
+- Blog Section 
+ - Link blog section to larger blog post - on the home page we can have a summary of the article. 
+ - Within articles themselves have photos of milestones, anniversaries and acheivement 
+ - Look into how other restaurants blog sections looks 
+
+Fill in column for socials, footer and nav bar 
+- For Dialog Modal Confirmation Box 
+    - Have cancel as the default option - have it already highlighted. 
+    The default option should be cancel - least damaging option. 
+
+- Menu Page 
+
+    - On home page I have menu summary but on menu page itself I can have the full version of the menu. 
+    - Can have buttons on top of the page - once clicked scroll down to specific parts of the menu page 
+
+- WEBSITE   
+
+    - Pick consistent brand colour scheme. Can also have neutral colours but use them sparingly. 
+
+ - HERO SECTION 
+
+    - Make order button functioning - redirect to menu page so customer can order items from menu 
+    - Needs an image instead of a logo 
+
+- NAV SECTION 
+
+    - Have the links either scroll down to the specific sections on the page or go to another page 
+
+- ABOUT US 
+
+    - Have Google Maps link so customer knows where restaurant is - USE static image of Google maps - choose a vibrate road with high footfall - surrounded by other restaurants 
+
+- OUR SERVICES 
+
+    - can change colour's of balls based on my final colour scheme - want them to compliment the rest of the page 
+    - THE WHOLE WEBSITE IS A THEME - style as well not just colour 
+
+- TODAY'S SPECIALS 
+
+    - Add photos of pizzas above pizza names 
+
+- CONTACT US 
+
+    - Once user submits their information a timeout modal can appear which disappears automatically but they still have the option to cancel. 
+
+- CART PAGE 
+    - want to be able to do a full checkout after pressing 'proceed to checkout' - have little waiting screen 'payment processing' and then after that 'payment accepted' 
+    - Let them fill in their real name, address but have credit card form looking like real entered data but user cant actually enter anything. - COVER MYSELF LEGALLY. 
+
+
+    - Put map under about us, take out of footer 
+
+    - White form fields instead of dark green 
+
+    - Change order of Nav to reflect order of home page 
+
+    - About Us - white text - green heading is fine 
+
+    - Put Italian text in CSS file 
+
+    - Add images of special pizzas 
+
+    - once user clicks on 'add to cart' button on menu item - replace add to cart with quantity adjuster - 
+    - Toggle between quantity adjuster and the add to cart button depending on the state of in cart. 
+
+    - Make whole blog box a link to the larger blog post. 
+
+    - Have 3 columns instead of 2 - a lot of white space, increase size of images - adjust blog images to match height and width of container boxes
+
+    - Hero section - The images should be the most prominent part of the section - have text 'welcome to Papa Z's and order now box' on top left 
+    - People eating pizza would be on bottom right and Welcome to papa z's on top left - The atmosphere, cleaniness of restaurant that's what I'm selling on the WEBSITE
+
+    - Want different colours of the sections - not single colour 
+
+    - Use textured image and make each section distinct 
+
+    - Can use images without any necessary information about why images exist - get rid of margins and spacing - self explanatory
+
+
+        1000
+         100
+        ----
+        1100
+    - Want fixed margin from top down - contained between home and cart - have column nothing goes in or out - all text has invisible border doesn't go too far left or right 
+    - Cart page items should be aligned left and numbers aligned right within the table 
+    - Quantity adjuster - fix alignment 
+
+    - Once it's all done then project is done - plan is to do as much of it as possible together next lesson and then I can work on the rest of it in my own time while we move onto something new 
+
+    - 3 is the magic number for portfolio 
+
+    - Drop down menu for food menu 
+
+
+    - Make sure the content box in the hero section isn't covering her head 
+    - Specials - Put pizza in the middle that I want to sell the most 
+    - Reduce height of images section - should be same size as services section 
+    - Consider or look at useContext - we can come back to it 
+    - Have consistency with menu button - make highlighted button the same green as the highlighted button in Contact Us and the inactive button should be white. 
+    - All buttons across the page except for order now and view full menu. View full menu button and add to cart should be same height at least 
+
+    - ASK DAN ABOUT 'BOOK A TABLE SCROLLING' 
+    - LOOK FOR FOOTBALL API WEBSITE 
+
+    Suggestions 17/03/2025 
+
+    - BOOK A TABLE SHOULD BE FIRST CALL TO ACTION BUTTON AND ORDER NOW SHOULD BE SECONDARY CALL TO ACTION TO MAKE IT CLEAR THAT IT IS A PIZZA RESTAURANT. 
+    - make hero section content box wider and shorter - avoid covering customer's head - stretch it out - there is a lot of space! 
+    - Make 'our menu' scrolling similar to landing page form scrolling. Will scroll to specific section of the menu when user clicks on menu category 
+
+    - TO DO LIST APP 
+
+    - Style it by myself so I can style it on my portfolio 
+

@@ -1,0 +1,38 @@
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * bodoni-urw:
+ *   - http://typekit.com/eulas/00000000000000000001793c
+ *   - http://typekit.com/eulas/000000000000000000017940
+ * suburban:
+ *   - http://typekit.com/eulas/00000000000000003b9adc40
+ *
+ * © 2009-2025 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2019-05-13 17:54:26 UTC"}*/
+
+@import url("https://p.typekit.net/p.css?s=1&k=tvw4phl&ht=tk&f=11257.11259.28535&a=1142547&app=typekit&e=css");
+
+@font-face {
+font-family:"bodoni-urw";
+src:url("https://use.typekit.net/af/ad9d0b/00000000000000000001793c/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3") format("woff2"),url("https://use.typekit.net/af/ad9d0b/00000000000000000001793c/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3") format("woff"),url("https://use.typekit.net/af/ad9d0b/00000000000000000001793c/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:300;font-stretch:normal;
+}
+
+@font-face {
+font-family:"bodoni-urw";
+src:url("https://use.typekit.net/af/0d6dbf/000000000000000000017940/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/0d6dbf/000000000000000000017940/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/0d6dbf/000000000000000000017940/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+font-family:"suburban";
+src:url("https://use.typekit.net/af/864e0e/00000000000000003b9adc40/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/864e0e/00000000000000003b9adc40/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/864e0e/00000000000000003b9adc40/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
+}
+
+.tk-bodoni-urw { font-family: "bodoni-urw",serif; }
+.tk-suburban { font-family: "suburban",sans-serif; }
