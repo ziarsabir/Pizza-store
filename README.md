@@ -1,70 +1,144 @@
-# Getting Started with Create React App
+# Pizza Store 2 🍕
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack pizza restaurant website built with React (frontend) and Node.js + Express (backend).  
+Includes a complete table booking system with validation, conflict detection, and status management.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- React frontend with reusable components
+- Express REST API for bookings
+- Full CRUD booking functionality
+- Time-slot conflict detection
+- Booking status management
+- Axios-based frontend → backend communication
+- Clean, centralised documentation (single README)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+pizza-store-2/
+│
+├── src/ # React frontend
+│ ├── components/
+│ │ ├── BookingForm.jsx
+│ │ ├── HeroSection.jsx
+│ │ └── ...
+│ │
+│ ├── services/
+│ │ └── bookingApi.js # Axios API helpers (frontend → backend)
+│ │
+│ ├── App.js
+│ └── index.js
+│
+├── booking-system/ # Express backend API
+│ ├── routes/
+│ │ └── bookings.js
+│ ├── utils/
+│ │ ├── validation.js
+│ │ └── database.js
+│ ├── server.js
+│ └── package.json
+│
+└── README.md
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Running the App (Two Terminals)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Frontend (React)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+From the project root:
 
-### `npm run eject`
+```bash
+npm install
+npm start
+Runs at:
+http://localhost:3000
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2️⃣ Backend (Express API)
+Open a second terminal, from the project root:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+bash
+Copy code
+cd booking-system
+npm install
+npm run dev
+Runs at:
+http://localhost:3001
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+API available at:
+http://localhost:3001/api/bookings
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+🔗 Frontend → Backend Connection
+The frontend communicates with the backend using Axios, defined in:
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+src/services/bookingApi.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL ||
+  'http://localhost:3001/api/bookings';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ Booking API Functions (Frontend)
 
-### Analyzing the Bundle Size
+The frontend uses the following API helpers:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+getBookings()
 
-### Making a Progressive Web App
+getBooking(id)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+createBooking(bookingData)
 
-### Advanced Configuration
+updateBooking(id, updates)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+updateBookingStatus(id, status)
 
-### Deployment
+deleteBooking(id)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+These functions are imported and used inside React components such as:
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+src/components/BookingForm.jsx
+
+ Booking Logic Overview: 
+
+Bookings are validated on the backend
+
+Past dates are rejected
+
+Restaurant hours enforced (11:00 – 22:00)
+
+Closed day: Monday
+
+Time-slot conflicts are detected before saving
+
+Booking duration is automatically calculated (2 hours)
+
+🧪 Example API Endpoint: 
+
+POST /api/bookings
+Request body:
+
+json
+
+{
+  "customerName": "John Doe",
+  "email": "john@example.com",
+  "phone": "123456789",
+  "date": "2024-01-15",
+  "time": "19:00",
+  "numberOfGuests": 4,
+  "specialRequests": "Window seat"
+}
+
+Notes
+
+Frontend and backend are clearly separated but fully connected.
+
+The project is structured for clarity, scalability, and portfolio presentation.
+
