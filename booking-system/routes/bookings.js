@@ -68,10 +68,13 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST /api/bookings - Create a new booking
+// what BACKEND is doing with the data before saving: 
 router.post('/', async (req, res, next) => {
   try {
+    // building the final booking object 
     const bookingData = {
       id: uuidv4(),
+      // req.body is the exact JSON sent from my frontend (bookingData)
       ...req.body,
       status: 'confirmed' // Auto-confirm bookings when there's no conflict (keep it simple)
     };
@@ -110,6 +113,7 @@ router.post('/', async (req, res, next) => {
       });
     }
 
+    // SAVE the create booking 
     const newBooking = await createBooking(bookingData);
 
     // Calculate end time for the booking (2 hours later)
@@ -118,7 +122,8 @@ router.post('/', async (req, res, next) => {
     const endHour = endDateTime.getHours();
     const endMinute = endDateTime.getMinutes();
     const endTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
-
+    
+    //Express is sending JSON like this
     res.status(201).json({
       success: true,
       message: `🎉 Congratulations! Your table is booked successfully! Your reservation is for 2 hours from ${bookingData.time} to ${endTime} on ${bookingData.date}. We look forward to serving you!`,

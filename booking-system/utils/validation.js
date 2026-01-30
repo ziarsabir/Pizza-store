@@ -55,11 +55,15 @@ function isValidEmail(email) {
 }
 
 function isValidDate(dateString) {
+  //regular expression that enforces the format 
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  //checks whether the string matches the format 
   if (!dateRegex.test(dateString)) {
     return false;
   }
+  //attempts to convert the string into a javascript date object 
   const date = new Date(dateString);
+  //this means it's a date date object and a usable real date as underlying number exists. 
   return date instanceof Date && !isNaN(date);
 }
 

@@ -36,6 +36,8 @@ export const createBooking = async (bookingData) => {
   try {
     const response = await bookingApi.post('/', bookingData);
     // Return the full response data which includes success, message, and data
+    // HTTP response is received from Express, AXIOS reads the response body (JSON), parses the JSON 
+    // Stores the result as a JavaScript object on response.data
     return response.data;
   } catch (error) {
     // If error has response data, throw that (it contains the error message from backend)

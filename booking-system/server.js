@@ -1,3 +1,4 @@
+// this is a complete middleware and routing system 
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -5,18 +6,20 @@ require('dotenv').config();
 const bookingRoutes = require('./routes/bookings');
 const { initializeDatabase } = require('./utils/database');
 
+// router is created as a module 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+// Middleware function is loaded inside the module
 app.use(cors());
+// this middleware line parses incoming JSON into a JS object and places it on req.body. 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Initialize database
 initializeDatabase();
 
-// Routes
+// Routes are defined 
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Pizza Store Booking API', 
@@ -27,6 +30,8 @@ app.get('/', (req, res) => {
   });
 });
 
+// this is mounting the router, this is why my router becomes: POST /api/booking and GET /api/booking etc. 
+// therefore Axios  -> POST /api.bookings (from bookingApi.js) lands inside router.post('/') in bookings.js
 app.use('/api/bookings', bookingRoutes);
 
 // Error handling middleware
@@ -44,8 +49,8 @@ app.use((req, res) => {
 });
 
 const server = app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📝 API available at http://localhost:${PORT}/api/bookings`);
+  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`API available at http://localhost:${PORT}/api/bookings`);
 });
 
 // Handle server errors gracefully
