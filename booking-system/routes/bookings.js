@@ -79,7 +79,7 @@ router.post('/', async (req, res, next) => {
       status: 'confirmed' // Auto-confirm bookings when there's no conflict (keep it simple)
     };
 
-    // Validate booking data
+    // Validate booking data - Field Validation 
     const validation = validateBooking(bookingData);
     if (!validation.isValid) {
       return res.status(400).json({
@@ -89,7 +89,7 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-    // Validate time slot
+    // Validate time slot - Business rules 
     const timeSlotValidation = validateTimeSlot(bookingData.date, bookingData.time);
     if (!timeSlotValidation.isValid) {
       return res.status(400).json({
@@ -161,6 +161,7 @@ router.put('/:id', async (req, res, next) => {
           message: timeSlotValidation.message
         });
       }
+
 
       // Check for conflicts with 2-hour time slot (excluding current booking)
       const existingBookings = await getBookingsByDate(date);

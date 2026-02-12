@@ -57,6 +57,7 @@ async function getBookingById(id) {
 async function createBooking(bookingData) {
   const bookings = await readBookings();
   const newBooking = {
+    // ...bookingData already has ID so it will override the first one. 
     id: bookingData.id,
     ...bookingData,
     createdAt: new Date().toISOString(),
@@ -89,13 +90,18 @@ async function updateBooking(id, updates) {
 // Delete booking
 async function deleteBooking(id) {
   const bookings = await readBookings();
+  // loop over every booking and only keep those whose ID does not match the one we want to delete. 
+  // IMMUTABLE - don't mutate original array - create new array 
   const filteredBookings = bookings.filter(booking => booking.id !== id);
   
+  // if no id was removed then array stays the same  - ID didn't exist, nothing was deleted 
   if (filteredBookings.length === bookings.length) {
-    return false; // Booking not found
+    return false; // Booking not found - route layer responds with 404 Not found and clear error message - prevents silent failure 
   }
   
+  // writes updated booking array back to JSON file - permanently deletes booking from storage 
   await writeBookings(filteredBookings);
+  // Delete was successful 
   return true;
 }
 

@@ -57,7 +57,7 @@ function isValidEmail(email) {
 function isValidDate(dateString) {
   //regular expression that enforces the format 
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-  //checks whether the string matches the format 
+  //checks whether the string (date in booking form) matches the format it will pass the first test and not return as false
   if (!dateRegex.test(dateString)) {
     return false;
   }
@@ -80,8 +80,11 @@ function isValidTime(timeString) {
 }
 
 function validateTimeSlot(date, time) {
+  // Date object created so I can rely on built in methods which makes time validation more straightforward
   const bookingDateTime = new Date(`${date}T${time}`);
+  // calling method on the Date object - returns number between 0-23 
   const hour = bookingDateTime.getHours();
+  // calls method that returns a number from 0-6
   const day = bookingDateTime.getDay(); // 0 = Sunday, 6 = Saturday
 
   // Example: Restaurant hours (adjust as needed)
@@ -105,6 +108,7 @@ function validateTimeSlot(date, time) {
   return { isValid: true };
 }
 
+// These are JSDoc annotations - document functions parameters and return shape so the contract is clear. The code is self-documenting, and IDEs can provide better tooling.
 /**
  * Check if a time slot conflicts with existing bookings
  * Each booking occupies a 2-hour slot
