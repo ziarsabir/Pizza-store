@@ -1,0 +1,94 @@
+1. NEW DATA SHAPE CONCEPT: 
+
+bookingsByDate = {
+    "YYYY-MM-DD": [ bookingObj, bookingObj, ... ], 
+    "YYYY-MM-DD": [ ... ]
+}
+
+1. Helper Idea - CONVERT TIME TO MINUTES 
+
+I need this so overlap checks are easy: 
+
+FUNCTION timeToMinutes("HH:MM"): 
+    SPLIT into hh, mm 
+    RETURN (hh * 60) + mm 
+
+2. HELPER IDEA: Does requested booking overlap an existing one? 
+
+Assume each booking is 2 hours (120 mins) 
+
+FUNCTION overlaps(requestedTime, existingTime): 
+    reqStart = timeToMinutes(requestedTime) 
+    reqEnd = reqStart + 120 
+
+    exStart = timeToMinutes(existingTime)
+    exEnd = exStart + 120 
+
+    IF reqStart < exEnd AND reqEnd > exStart: 
+        RETURN true 
+    ELSE: 
+        RETURN false 
+
+This condition is the OVERLAP RULE 
+
+3. Get bookings for a date 
+
+FUNCTION getBookingsForDate(bookingsByDate, date): 
+    IF bookingsByDate has key date: 
+        RETURN bookingsByDate[date]
+    ELSE: 
+        RETURN empty array 
+
+4. Find "overlapping bookings" for the requested slot (date + time) 
+
+FUNCTION getOverlappingBookingsForSlot(bookingsForDate, requestedTime): 
+    overlapping = empty array 
+
+    FOR each booking IN bookingsForDate: 
+    Only bookings with certain statuses should count towards capacity so for example "cancelled" should not count as blocking booking
+        IF booking.status is "cancelled": 
+            CONTINUE 
+
+        IF overlaps(requestedTime, booking.time): 
+            ADD booking to overlapping 
+    
+    RETURN overlapping 
+
+5. Capacity Check (MAX_TABLES = 5) 
+
+MAX_TABLES = 5 
+
+FUNCTION isSlotAvailable(bookingsByDate, date, requestedTime): 
+    todaysBookings = getBookingsForDate(bookingsByDate, date)
+
+    overlappingBookings = getOverlappingBookingsForSlot(todaysBookings, requestedTime)
+
+    IF length(overlappingBookings) < MAX_TABLES: 
+        RETURN { available: true, overlappingBookings }
+    ELSE: 
+        RETURN { available: false, overlappingBookings }
+
+
+6. Create Booking Flow (HIGH LEVEL) - DATABASE.JS - This function is a pipeline, calls helpers, makes one decision and WRITES data 
+
+This is what my POST route will do in the new world. 
+
+Pseudo Code: I WANT to evolve this function from creating and saving a booking to check availability -> if allowed, then create and save a booking - GATEKEEPER function 
+
+FUNCTION createBooking(newBooking): 
+    bookingsByDate = readeFromFile() 
+
+    result = isSlotAvailable(bookingsByDate, newBooking.date, newBooking.time)
+
+    IF result.available is false; 
+        RETURN 409 "Fully booked at that time" 
+
+    ADD newBooking to bookingsByDate[newBooking.date] 
+        (create the array first if it doesn't exist)
+
+    writeToFile(bookingsByDate) 
+
+    RETURN 201 success + newBooking 
+
+
+    
