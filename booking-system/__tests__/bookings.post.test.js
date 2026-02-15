@@ -45,7 +45,7 @@ jest.mock('../utils/database', () => ({
   getBookingsByStatus: jest.fn(),
 }));
 
-// Mock validation so we can control pass/fail cases
+// Mock validation so I can control pass/fail cases
 jest.mock('../utils/validation', () => ({
   validateBooking: jest.fn(),
   validateTimeSlot: jest.fn(),
@@ -78,7 +78,7 @@ describe('POST /api/bookings', () => {
       email: 'ziar@test.com',
       phone: '07123456789',
       date: '2026-02-09',
-      time: '19:30',,n/
+      time: '19:30',
       numberOfGuests: 2,
       specialRequests: '',
     };
