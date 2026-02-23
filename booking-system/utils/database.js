@@ -4,6 +4,8 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, '../data');
 const BOOKINGS_FILE = path.join(DATA_DIR, 'bookings.json');
 
+const { isSlotAvailable } = require('./bookingHelpers'); 
+
 // Ensure data directory exists
 async function ensureDataDirectory() {
   try {
@@ -21,7 +23,7 @@ async function initializeDatabase() {
   } catch (error) {
     // File doesn't exist, create it with empty array
     await fs.writeFile(BOOKINGS_FILE, JSON.stringify([], null, 2));
-    console.log('✅ Database initialized');
+    console.log('Database initialized');
   }
 }
 
@@ -56,6 +58,14 @@ async function getBookingById(id) {
 // Create new booking
 async function createBooking(bookingData) {
   const bookings = await readBookings();
+
+  const { available } = isSlotAvailable(bookings, bookingData.date, bookingData.time); 
+  if (!available) {
+    const err = new Error('Time slot is not available!'); 
+    err.statusCode = 409; 
+    throw err; 
+  }
+
   const newBooking = {
     // ...bookingData already has ID so it will override the first one. 
     id: bookingData.id,
