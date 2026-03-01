@@ -98,21 +98,6 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-    // Check for existing bookings with 2-hour time slot conflicts
-    const existingBookings = await getBookingsByDate(bookingData.date);
-    const conflictCheck = checkTimeSlotConflict(
-      bookingData.date,
-      bookingData.time,
-      existingBookings
-    );
-
-    if (conflictCheck.hasConflict) {
-      return res.status(409).json({
-        success: false,
-        message: conflictCheck.message
-      });
-    }
-
     // SAVE the create booking 
     const newBooking = await createBooking(bookingData);
 
