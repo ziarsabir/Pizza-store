@@ -9,7 +9,8 @@ const {
   updateBooking,
   deleteBooking,
   getBookingsByDate,
-  getBookingsByStatus
+  getBookingsByStatus, 
+  getAllBookingsFlat 
 } = require('../utils/database');
 
 const { validateBooking, validateTimeSlot, checkTimeSlotConflict } = require('../utils/validation');
@@ -25,7 +26,7 @@ router.get('/', async (req, res, next) => {
     } else if (status) {
       bookings = await getBookingsByStatus(status);
     } else {
-      bookings = await readBookings();
+      bookings = await getAllBookingsFlat();
     }
 
     // Sort by date and time (most recent first)

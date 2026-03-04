@@ -21,8 +21,8 @@ async function initializeDatabase() {
   try {
     await fs.access(BOOKINGS_FILE);
   } catch (error) {
-    // File doesn't exist, create it with empty array
-    await fs.writeFile(BOOKINGS_FILE, JSON.stringify([], null, 2));
+    // This ensures brand new database starts as an object 
+    await fs.writeFile(BOOKINGS_FILE, JSON.stringify({}, null, 2));
     console.log('Database initialized');
   }
 }
@@ -34,7 +34,7 @@ async function readBookings() {
     return JSON.parse(data);
   } catch (error) {
     console.error('Error reading bookings:', error);
-    return [];
+    return {};
   }
 }
 
@@ -49,82 +49,109 @@ async function writeBookings(bookings) {
   }
 }
 
-// Get booking by ID
 async function getBookingById(id) {
-  const bookings = await readBookings();
-  return bookings.find(booking => booking.id === id);
+  const allBookings = await getAllBookingsFlat();
+  return allBookings.find(b => b.id === id);
 }
 
 // Create new booking
 async function createBooking(bookingData) {
-  const bookings = await readBookings();
+  const bookingsByDate = await readBookings(); // now an object
 
-  const { available } = isSlotAvailable(bookings, bookingData.date, bookingData.time); 
+  const { available } = isSlotAvailable(bookingsByDate, bookingData.date, bookingData.time);
   if (!available) {
-    const err = new Error('Time slot is not available!'); 
-    err.statusCode = 409; 
-    throw err; 
+    const err = new Error('Time slot is not available!');
+    err.statusCode = 409;
+    throw err;
   }
 
   const newBooking = {
-    // ...bookingData already has ID so it will override the first one. 
     id: bookingData.id,
     ...bookingData,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
-  bookings.push(newBooking);
-  await writeBookings(bookings);
+
+  // Ensure date bucket exists
+  if (!bookingsByDate[bookingData.date]) {
+    bookingsByDate[bookingData.date] = [];
+  }
+
+  // Add to that date’s array
+  bookingsByDate[bookingData.date].push(newBooking);
+
+  await writeBookings(bookingsByDate);
   return newBooking;
 }
 
-// Update booking
 async function updateBooking(id, updates) {
-  const bookings = await readBookings();
-  const index = bookings.findIndex(booking => booking.id === id);
-  
-  if (index === -1) {
-    return null;
-  }
-  
-  bookings[index] = {
-    ...bookings[index],
-    ...updates,
-    updatedAt: new Date().toISOString()
-  };
-  
-  await writeBookings(bookings);
-  return bookings[index];
-}
+  const bookingsByDate = await readBookings();
 
+  for (const date in bookingsByDate) {
+    const index = bookingsByDate[date].findIndex(b => b.id === id);
+
+    if (index !== -1) {
+      bookingsByDate[date][index] = {
+        ...bookingsByDate[date][index],
+        ...updates,
+        updatedAt: new Date().toISOString()
+      };
+
+      await writeBookings(bookingsByDate);
+      return bookingsByDate[date][index];
+    }
+  }
+
+  return null;
+}
 // Delete booking
 async function deleteBooking(id) {
-  const bookings = await readBookings();
-  // loop over every booking and only keep those whose ID does not match the one we want to delete. 
-  // IMMUTABLE - don't mutate original array - create new array 
-  const filteredBookings = bookings.filter(booking => booking.id !== id);
-  
-  // if no id was removed then array stays the same  - ID didn't exist, nothing was deleted 
-  if (filteredBookings.length === bookings.length) {
-    return false; // Booking not found - route layer responds with 404 Not found and clear error message - prevents silent failure 
+  const bookingsByDate = await readBookings();
+  let deleted = false;
+
+  for (const date in bookingsByDate) {
+    const before = bookingsByDate[date].length;
+    bookingsByDate[date] = bookingsByDate[date].filter(b => b.id !== id);
+
+    if (bookingsByDate[date].length !== before) {
+      deleted = true;
+
+      // optional tidy: remove empty date keys
+      if (bookingsByDate[date].length === 0) {
+        delete bookingsByDate[date];
+      }
+
+      break;
+    }
   }
-  
-  // writes updated booking array back to JSON file - permanently deletes booking from storage 
-  await writeBookings(filteredBookings);
-  // Delete was successful 
+
+  if (!deleted) return false;
+
+  await writeBookings(bookingsByDate);
   return true;
 }
 
-// Get bookings by date
-async function getBookingsByDate(date) {
-  const bookings = await readBookings();
-  return bookings.filter(booking => booking.date === date);
+// Get ALL bookings as a flat array (useful for filtering/sorting)
+async function getAllBookingsFlat() {
+  const bookingsByDate = await readBookings();
+  const all = [];
+
+  for (const date in bookingsByDate) {
+    all.push(...bookingsByDate[date]);
+  }
+
+  return all;
 }
 
-// Get bookings by status
+// Get bookings by date (dictionary storage)
+async function getBookingsByDate(date) {
+  const bookingsByDate = await readBookings();
+  return bookingsByDate[date] || [];
+}
+// Get bookings by status (works with dictionary storage)
 async function getBookingsByStatus(status) {
-  const bookings = await readBookings();
-  return bookings.filter(booking => booking.status === status);
+  const allBookings = await getAllBookingsFlat();
+  return allBookings.filter(booking => booking.status === status);
 }
 
 module.exports = {
@@ -136,6 +163,7 @@ module.exports = {
   updateBooking,
   deleteBooking,
   getBookingsByDate,
-  getBookingsByStatus
+  getBookingsByStatus, 
+  getAllBookingsFlat 
 };
 
