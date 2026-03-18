@@ -56,6 +56,7 @@ async function getBookingById(id) {
 
 // Create new booking
 async function createBooking(bookingData) {
+try {
   const bookingsByDate = await readBookings(); // now an object
 
   const { available } = isSlotAvailable(bookingsByDate, bookingData.date, bookingData.time);
@@ -82,6 +83,10 @@ async function createBooking(bookingData) {
 
   await writeBookings(bookingsByDate);
   return newBooking;
+  } catch (error) {
+    console.error('Error in createBooking: ', error); 
+    throw error; 
+  }
 }
 
 async function updateBooking(id, updates) {
