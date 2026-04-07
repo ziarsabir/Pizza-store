@@ -44,7 +44,7 @@ async function writeBookings(bookings) {
     await fs.writeFile(BOOKINGS_FILE, JSON.stringify(bookings, null, 2));
     return true;
   } catch (error) {
-    console.error('Error writing bookings:', error);
+    console.error('Error writing bookings in write bookings functions:', error);
     throw error;
   }
 }

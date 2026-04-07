@@ -1,57 +1,51 @@
-// Setup 
-
-// Mock deleteBooking() to return true. 
-
+// SETUP
 
 // ACT 
 
-// Send: DELETE /api/bookings/:id 
+// ASSERT
 
-// ASSERT 
+const request = require('supertest');
 
-// Status = 200 
-// Success = true 
-// message = "Booking deleted successfully"
-
-const request = require('supertest'); 
-
-// Setup: mock database layer 
 jest.mock('../utils/database', () => ({
-    deleteBooking: jest.fn(), 
-})); 
+  initializeDatabase: jest.fn(),
+  readBookings: jest.fn(),
+  writeBookings: jest.fn(),
+  getBookingById: jest.fn(),
+  createBooking: jest.fn(),
+  updateBooking: jest.fn(),
+  deleteBooking: jest.fn(),
+  getBookingsByDate: jest.fn(),
+  getBookingsByStatus: jest.fn(),
+  getAllBookingsFlat: jest.fn(),
+}));
 
-const app = require('../app'); 
-const db = require('../utils/database'); 
+const app = require('../app');
+const db = require('../utils/database');
 
 describe('DELETE /api/bookings/:id', () => {
-    // testing success path 
-    test('deletes a booking and returns 200', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-        // Setup
-        db.deleteBooking.mockResolvedValue(true); 
+  test('deletes a booking and returns 200', async () => {
+    db.deleteBooking.mockResolvedValue(true);
 
-        // Act 
-        const res = await request(app).delete('/api/bookings/test-id'); 
+    const res = await request(app).delete('/api/bookings/test-id');
 
-        // Assert 
-        expect(res.status).toBe(200); 
-        expect(res.body.success).toBe(true); 
-        expect(res.body.message).toBe('Booking deleted successfully'); 
-    }); 
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.message).toBe('Booking deleted successfully');
+    expect(db.deleteBooking).toHaveBeenCalledWith('test-id');
+  });
 
-    // testing failure path 
-    test('returns 404 when booking is not found', async () => {
-        // Setup
-        db.deleteBooking.mockResolvedValue(false); 
+  test('returns 404 when booking is not found', async () => {
+    db.deleteBooking.mockResolvedValue(false);
 
-        // Act
-        const res = await request(app).delete('/api/bookings/non-existent-id'); 
+    const res = await request(app).delete('/api/bookings/non-existent-id');
 
-        // Assert 
-        expect(res.status).toBe(404); 
-        expect(res.body.success).toBe(false); 
-        expect(res.body.message).toBe('Booking not found'); 
-    }); 
-}); 
-
-
+    expect(res.status).toBe(404);
+    expect(res.body.success).toBe(false);
+    expect(res.body.message).toBe('Booking not found');
+    expect(db.deleteBooking).toHaveBeenCalledWith('non-existent-id');
+  });
+});
