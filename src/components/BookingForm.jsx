@@ -93,7 +93,7 @@ export default function BookingForm() {
     <>
       {/* Success Modal Popup */}
       {success && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4">
+        <div className="scroll-mt-16 fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-6 relative animate-fadeIn">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-3xl font-bold leading-none"
@@ -212,17 +212,53 @@ export default function BookingForm() {
       {/* Time Field */}
       <div className="mb-4">
         <label htmlFor="time" className="block text-white">Select Time</label>
-        <input
-          type="time"
+       <select
           id="time"
           name="time"
           value={formData.time}
           onChange={handleChange}
-          min="11:00"
-          max="20:00"
           className="w-full mt-2 p-3 border border-gray-400 rounded bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
           required
-        />
+        >
+          <option value="">Select a time</option>
+          <option value="11:00">11:00 AM</option>
+          <option value="11:15">11:15 AM</option>
+          <option value="11:30">11:30 AM</option>
+          <option value="11:45">11:45 AM</option>
+          <option value="12:00">12:00 PM</option>
+          <option value="12:15">12:15 PM</option>
+          <option value="12:30">12:30 PM</option>
+          <option value="12:45">12:45 PM</option>
+          <option value="13:00">1:00 PM</option>
+          <option value="13:15">1:15 PM</option>
+          <option value="13:30">1:30 PM</option>
+          <option value="13:45">1:45 PM</option>
+          <option value="14:00">2:00 PM</option>
+          <option value="14:15">2:15 PM</option>
+          <option value="14:30">2:30 PM</option>
+          <option value="14:45">2:45 PM</option>
+          <option value="15:00">3:00 PM</option>
+          <option value="15:15">3:15 PM</option>
+          <option value="15:30">3:30 PM</option>
+          <option value="15:45">3:45 PM</option>
+          <option value="16:00">4:00 PM</option>
+          <option value="16:15">4:15 PM</option>
+          <option value="16:30">4:30 PM</option>
+          <option value="16:45">4:45 PM</option>
+          <option value="17:00">5:00 PM</option>
+          <option value="17:15">5:15 PM</option>
+          <option value="17:30">5:30 PM</option>
+          <option value="17:45">5:45 PM</option>
+          <option value="18:00">6:00 PM</option>
+          <option value="18:15">6:15 PM</option>
+          <option value="18:30">6:30 PM</option>
+          <option value="18:45">6:45 PM</option>
+          <option value="19:00">7:00 PM</option>
+          <option value="19:15">7:15 PM</option>
+          <option value="19:30">7:30 PM</option>
+          <option value="19:45">7:45 PM</option>
+          <option value="20:00">8:00 PM</option>
+        </select>
         <p className="text-gray-300 text-sm mt-1">Restaurant hours: 11:00 AM - 10:00 PM</p>
         <p className="text-yellow-300 text-sm mt-1 font-semibold">⏰ Each booking is for 2 hours. Please ensure your selected time allows for a 2-hour reservation.</p>
       </div>

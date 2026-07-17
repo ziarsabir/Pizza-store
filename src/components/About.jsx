@@ -3,7 +3,7 @@ import MapImage from "./MapImage";
 
 function About() {
   return (
-    <section id="About" className="font-italian font-bold flex flex-col md:flex-row p-10 bg-[#F5E6CC] text-green-800">
+    <section id="About" className="scroll-mt-16 font-italian font-bold flex flex-col md:flex-row p-10 bg-[#F5E6CC] text-green-800">
       {/* Left Side - About Content */}
       <div className="p-6 md:w-1/2">
         <h2 className="text-4xl mb-4 text-green-800">About Us</h2>

@@ -3,7 +3,7 @@ import { FaLeaf, FaMotorcycle, FaPizzaSlice } from "react-icons/fa";
 
 function Services() {
   return (
-    <section id="Services" className="font-bold font-italian p-6 bg-[#E3C29D] text-[#2F5233]"> 
+    <section id="Services" className="scroll-mt-16 font-bold font-italian p-6 bg-[#E3C29D] text-[#2F5233]"> 
       <h2 className="text-3xl text-center mb-4 font-semibold text-[#1E3A34]">Our Services</h2>
       <p className="text-center mb-8 text-[#4A4A4A]">
         We proudly serve the people of London with the best, cheesiest, and most authentic Italian pizza for over 31 years.

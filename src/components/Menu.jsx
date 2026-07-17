@@ -108,7 +108,7 @@ function Menu({ addToCart }) {
     };
 
     return (
-        <section id="Menu" className="p-6 bg-gray-900 text-white">
+        <section id="Menu" className="scroll-mt-16 p-6 bg-gray-900 text-white">
             <h2 className="font-italian font-bold text-4xl text-center font-semibold mb-4 text-green-400">Our Menu</h2>
             <p className="font-italian font-bold text-center mb-6">Explore our diverse range of delicious offerings.</p>
 

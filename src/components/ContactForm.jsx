@@ -5,7 +5,7 @@ function ContactForm() {
   return (
     <>
       {/* Form Section */}
-      <form className="max-w-lg mx-auto bg-[#4A1C1C] p-6 rounded-lg shadow-md">
+      <form className="scroll-mt-16 max-w-lg mx-auto bg-[#4A1C1C] p-6 rounded-lg shadow-md">
         {/* Name Field */}
         <div className="mb-4">
           <label htmlFor="name" className="block text-white">Name</label>

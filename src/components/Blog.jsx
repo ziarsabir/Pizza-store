@@ -22,7 +22,7 @@ function Blog() {
   return (
     <section 
       id="Blog" 
-      className="font-bold font-italian p-10 bg-[#1E4D2B] text-white"
+      className="scroll-mt-16 font-bold font-italian p-10 bg-[#1E4D2B] text-white"
     >
       {/* Section Title */}
       <h2 className="text-4xl font-semibold text-white text-center mb-8">
