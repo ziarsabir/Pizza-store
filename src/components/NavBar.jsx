@@ -20,28 +20,28 @@ function NavBar({ cart, setFormState }) {
   );
 
   const desktopLinkStyles =
-    "text-lg whitespace-nowrap transition-colors duration-200 hover:text-green-400";
+    "whitespace-nowrap px-2 py-2 text-lg transition-colors duration-200 hover:text-green-400";
 
   const mobileLinkStyles =
-    "w-full py-2 text-center text-lg transition-colors duration-200 hover:text-green-400 hover:bg-gray-800 rounded";
+    "w-full rounded-lg py-3 text-center text-lg transition-colors duration-200 hover:bg-gray-800 hover:text-green-400";
 
   return (
     <nav
       id="Nav-bar"
-      className="fixed top-0 left-0 z-50 w-full bg-gray-900 text-white shadow-lg font-italian font-bold"
+      className="fixed left-0 top-0 z-50 w-full bg-gray-900 font-italian font-bold text-white shadow-lg"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-4 py-3 sm:px-6 xl:px-8">
         {/* Brand */}
         <Link
           to="/"
           onClick={closeMenu}
-          className="whitespace-nowrap text-xl text-green-400 transition-colors hover:text-green-300 sm:text-2xl"
+          className="whitespace-nowrap text-xl text-green-400 transition-colors duration-200 hover:text-green-300 sm:text-2xl"
         >
           🍕 Papa Z&apos;s Pizza
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden items-center gap-7 lg:flex">
+        {/* Desktop navigation */}
+        <div className="hidden items-center gap-7 xl:flex 2xl:gap-10">
           <HashLink
             smooth
             to="/#Menu"
@@ -98,7 +98,7 @@ function NavBar({ cart, setFormState }) {
           <Link
             to="/cart"
             onClick={closeMenu}
-            className="relative rounded-full p-1 transition-colors hover:text-green-400"
+            className="relative rounded-full p-1 transition-colors duration-200 hover:text-green-400"
             aria-label={`Shopping cart with ${cartQuantity} items`}
           >
             <ShoppingCartIcon className="h-8 w-8" />
@@ -112,7 +112,7 @@ function NavBar({ cart, setFormState }) {
 
           <button
             type="button"
-            className="rounded p-1 transition-colors hover:bg-gray-800 hover:text-green-400 lg:hidden"
+            className="rounded-lg p-1 transition-colors duration-200 hover:bg-gray-800 hover:text-green-400 xl:hidden"
             onClick={() => setMenuOpen((previous) => !previous)}
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
@@ -128,7 +128,7 @@ function NavBar({ cart, setFormState }) {
 
       {/* Mobile and tablet navigation */}
       {menuOpen && (
-        <div className="border-t border-gray-700 bg-gray-900 px-4 py-4 lg:hidden">
+        <div className="border-t border-gray-700 bg-gray-900 px-4 py-4 xl:hidden">
           <div className="mx-auto flex max-w-md flex-col gap-1">
             <HashLink
               smooth
