@@ -1,78 +1,199 @@
-import React from "react";
-import { ShoppingCartIcon } from "@heroicons/react/24/solid";
+import React, { useState } from "react";
+import {
+  ShoppingCartIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 
-// Added `setBookingMode` prop
-function NavBar({ cart, setFormState }) {  
-    return (
-        <div id="Nav-bar" className="font-italian font-bold bg-gray-900 text-white py-3 px-6 flex justify-around fixed top-0 left-0 w-full z-50 shadow-lg">
-            <div>
-                <Link to="/" className="hover:text-green-400">
-                    Home
-                </Link>
-            </div>
+function NavBar({ cart, setFormState }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-            <div>
-                <HashLink smooth to="/#Menu" className="hover:text-green-400">
-                    Menu
-                </HashLink>
-            </div>
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
 
-            <div>
-                <HashLink smooth to="/#Services" className="hover:text-green-400">
-                    Services
-                </HashLink>
-            </div>
+  const cartQuantity = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
 
-            <div>
-                <HashLink smooth to='/#Blog' className="hover:text-green-400">
-                    Blog
-                </HashLink> 
-            </div>
+  const desktopLinkStyles =
+    "text-lg whitespace-nowrap transition-colors duration-200 hover:text-green-400";
 
-            <div>
-                <HashLink smooth to="/#About" className="hover:text-green-400">
-                    About Us 
-                </HashLink>
-            </div>
+  const mobileLinkStyles =
+    "w-full py-2 text-center text-lg transition-colors duration-200 hover:text-green-400 hover:bg-gray-800 rounded";
 
-            {/* Contact Us Link */}
-            <div>
-                <HashLink smooth to="/#LandingPageForm" className="hover:text-green-400"
-                  onClick={() => { 
-                  setFormState('contact-us');
-                }} 
-                >
-                    Contact Us
-                </HashLink>
-            </div>
+  return (
+    <nav
+      id="Nav-bar"
+      className="fixed top-0 left-0 z-50 w-full bg-gray-900 text-white shadow-lg font-italian font-bold"
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+        {/* Brand */}
+        <Link
+          to="/"
+          onClick={closeMenu}
+          className="whitespace-nowrap text-xl text-green-400 transition-colors hover:text-green-300 sm:text-2xl"
+        >
+          🍕 Papa Z&apos;s Pizza
+        </Link>
 
-            {/* New "Book a Table" Link - Triggers Booking Mode */}
-            <div>
-                <HashLink smooth to="/#LandingPageForm" className="hover:text-green-400"
-                  onClick={(e) => {
-                    setFormState('booking-form'); 
-                  }} 
-                
-                >
-                    Book a Table
-                </HashLink>
-            </div>
+        {/* Desktop Navigation */}
+        <div className="hidden items-center gap-7 lg:flex">
+          <HashLink
+            smooth
+            to="/#Menu"
+            className={desktopLinkStyles}
+          >
+            Menu
+          </HashLink>
 
-            {/* Shopping Cart Icon */}
-            <div className="relative">
-                <Link to="/cart">
-                    <ShoppingCartIcon className="size-8" />
-                    {cart.length > 0 && (
-                        <span className="absolute top-0 right-0 bg-green-400 text-gray-800 text-xs font-bold px-2 py-1 rounded-full">
-                            {cart.reduce((total, item) => total + item.quantity, 0)}
-                        </span>
-                    )}
-                </Link>
-            </div>
+          <HashLink
+            smooth
+            to="/#Services"
+            className={desktopLinkStyles}
+          >
+            Services
+          </HashLink>
+
+          <HashLink
+            smooth
+            to="/#Blog"
+            className={desktopLinkStyles}
+          >
+            Blog
+          </HashLink>
+
+          <HashLink
+            smooth
+            to="/#About"
+            className={desktopLinkStyles}
+          >
+            About Us
+          </HashLink>
+
+          <HashLink
+            smooth
+            to="/#LandingPageForm"
+            className={desktopLinkStyles}
+            onClick={() => setFormState("contact-us")}
+          >
+            Contact Us
+          </HashLink>
+
+          <HashLink
+            smooth
+            to="/#LandingPageForm"
+            className={desktopLinkStyles}
+            onClick={() => setFormState("booking-form")}
+          >
+            Book a Table
+          </HashLink>
         </div>
-    );
+
+        {/* Cart and hamburger */}
+        <div className="flex items-center gap-4">
+          <Link
+            to="/cart"
+            onClick={closeMenu}
+            className="relative rounded-full p-1 transition-colors hover:text-green-400"
+            aria-label={`Shopping cart with ${cartQuantity} items`}
+          >
+            <ShoppingCartIcon className="h-8 w-8" />
+
+            {cartQuantity > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-green-400 px-1 text-xs font-bold text-gray-900">
+                {cartQuantity}
+              </span>
+            )}
+          </Link>
+
+          <button
+            type="button"
+            className="rounded p-1 transition-colors hover:bg-gray-800 hover:text-green-400 lg:hidden"
+            onClick={() => setMenuOpen((previous) => !previous)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? (
+              <XMarkIcon className="h-8 w-8" />
+            ) : (
+              <Bars3Icon className="h-8 w-8" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile and tablet navigation */}
+      {menuOpen && (
+        <div className="border-t border-gray-700 bg-gray-900 px-4 py-4 lg:hidden">
+          <div className="mx-auto flex max-w-md flex-col gap-1">
+            <HashLink
+              smooth
+              to="/#Menu"
+              onClick={closeMenu}
+              className={mobileLinkStyles}
+            >
+              Menu
+            </HashLink>
+
+            <HashLink
+              smooth
+              to="/#Services"
+              onClick={closeMenu}
+              className={mobileLinkStyles}
+            >
+              Services
+            </HashLink>
+
+            <HashLink
+              smooth
+              to="/#Blog"
+              onClick={closeMenu}
+              className={mobileLinkStyles}
+            >
+              Blog
+            </HashLink>
+
+            <HashLink
+              smooth
+              to="/#About"
+              onClick={closeMenu}
+              className={mobileLinkStyles}
+            >
+              About Us
+            </HashLink>
+
+            <HashLink
+              smooth
+              to="/#LandingPageForm"
+              className={mobileLinkStyles}
+              onClick={() => {
+                setFormState("contact-us");
+                closeMenu();
+              }}
+            >
+              Contact Us
+            </HashLink>
+
+            <HashLink
+              smooth
+              to="/#LandingPageForm"
+              className={mobileLinkStyles}
+              onClick={() => {
+                setFormState("booking-form");
+                closeMenu();
+              }}
+            >
+              Book a Table
+            </HashLink>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
 }
 
 export default NavBar;

@@ -1,50 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
   const navigate = useNavigate();
 
-  // Image list using your correct filenames
-  const images = Array.from({ length: 13 }, (_, i) => `/images/pizzaproject/${i + 1}.png`);
+  // Background images
+  const images = Array.from(
+    { length: 13 },
+    (_, index) => `/images/pizzaproject/${index + 1}.png`
+  );
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000); // change image every 5 seconds
+      setCurrentImageIndex(
+        (previousIndex) => (previousIndex + 1) % images.length
+      );
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   return (
-    <div
+    <section
       id="Hero-section"
-      className="relative h-screen bg-cover bg-center bg-no-repeat font-italian transition-all duration-1000 ease-in-out"
-      style={{ backgroundImage: `url('${images[currentImageIndex]}')` }}
+      className="relative mt-16 min-h-[600px] bg-cover bg-center bg-no-repeat font-italian transition-all duration-1000 ease-in-out sm:min-h-[650px] lg:min-h-[calc(100vh-64px)]"
+      style={{
+        backgroundImage: `url("${images[currentImageIndex]}")`,
+      }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-black/30"></div>
 
-      {/* Content Box */}
-      <div className="absolute top-4 left-6 max-w-md bg-black bg-opacity-60 p-4 rounded-lg shadow-xl z-10">
-        <h1 className="text-4xl font-bold leading-tight text-[#3DBE57]">
-          Welcome to Papa Z's Pizza
-        </h1>
-        <p className="text-md text-gray-200 mt-3 italic">
-          Serving the <span className="text-[#3DBE57]">cheesiest</span> and most
-          <span className="text-[#3DBE57]"> authentic</span> Italian pizza in town!
-        </p>
-        <div className="text-left">
+      {/* Hero Content */}
+      <div className="relative z-10 flex min-h-[600px] items-start px-4 pt-6 sm:min-h-[650px] sm:px-8 sm:pt-8 lg:min-h-[calc(100vh-64px)] lg:px-12 lg:pt-20">
+        <div className="w-full max-w-lg rounded-xl bg-black/60 p-6 shadow-2xl backdrop-blur-sm">
+          <p className="text-xl leading-relaxed text-gray-100 sm:text-2xl lg:text-3xl">
+            Serving the{" "}
+            <span className="font-bold text-[#3DBE57]">
+              cheesiest
+            </span>{" "}
+            and most{" "}
+            <span className="font-bold text-[#3DBE57]">
+              authentic
+            </span>{" "}
+            Italian pizza in town.
+          </p>
+
           <button
-            className="mt-4 bg-[#7A1C1C] text-white py-4 px-10 rounded-full text-lg font-bold hover:bg-[#641616] transition duration-300 shadow-lg"
+            type="button"
+            className="mt-5 rounded-full bg-white px-8 py-3 text-lg font-bold text-[#3DBE57] shadow-lg transition-all duration-300 hover:scale-105 hover:bg-gray-100"
             onClick={() => navigate("/full-menu")}
           >
-            🍕 ORDER NOW 🍕
+            🍕 Order Now
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
