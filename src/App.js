@@ -9,6 +9,7 @@ import FullMenu from "./pages/FullMenu";
 import Menu from "./components/Menu";
 import BlogDetails from "./pages/BlogDetails";
 import ContactForm from "./components/ContactForm";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
     const [cart, setCart] = useState(
@@ -37,6 +38,9 @@ function App() {
 
     return (
         <Router>
+
+            <ScrollToTop />
+
             <NavBar cart={cart} setFormState={ setFormState } />
             <Routes>
                 <Route path="/" element={<HomePage addToCart={addToCart} formState={ formState } setFormState={ setFormState } />} />

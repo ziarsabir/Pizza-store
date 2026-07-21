@@ -20,7 +20,7 @@ function NavBar({ cart, setFormState }) {
   );
 
   const desktopLinkStyles =
-    "whitespace-nowrap px-2 py-2 text-lg transition-colors duration-200 hover:text-green-400";
+    "whitespace-nowrap px-3 py-2 text-lg transition-colors duration-200 hover:text-green-400";
 
   const mobileLinkStyles =
     "w-full rounded-lg py-3 text-center text-lg transition-colors duration-200 hover:bg-gray-800 hover:text-green-400";
@@ -41,7 +41,7 @@ function NavBar({ cart, setFormState }) {
         </Link>
 
         {/* Desktop navigation */}
-        <div className="hidden items-center gap-7 xl:flex 2xl:gap-10">
+        <div className="hidden items-center gap-10 xl:flex 2xl:gap-12">
           <HashLink
             smooth
             to="/#Menu"

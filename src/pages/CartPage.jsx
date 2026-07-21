@@ -1,108 +1,142 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import QuantityAdjuster from "../components/QuantityAdjuster";
 import ConfirmDeleteItemModal from "../components/ConfirmDeleteItemModal";
 
 export default function CartPage({ cart, setCart }) {
-    // const [items, setItems] = useState(cart); 
-    // console.log('items', items);
+  const [openModal, setOpenModal] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
 
-    // Controls modal visibility
-    const [openModal, setOpenModal] = useState(false);  
-    // Tracks the item to be deleted
-    const [deleteIndex, setDeleteIndex] = useState(null);  
+  function calcTotalPrice() {
+    let total = 0;
 
-    function calcTotalPrice() {
-        let total = 0;
-        for (let i = 0; i < cart.length; i++) {
-            total += cart[i].price * cart[i].quantity;
-        }
-        return total;
+    for (let i = 0; i < cart.length; i++) {
+      total += cart[i].price * cart[i].quantity;
     }
 
-    function increaseQuantity(index) {
-        let updatedCart = [...cart];
-        updatedCart[index].quantity += 1;
-        setCart(updatedCart);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+    return total;
+  }
+
+  function increaseQuantity(index) {
+    const updatedCart = [...cart];
+
+    updatedCart[index] = {
+      ...updatedCart[index],
+      quantity: updatedCart[index].quantity + 1,
+    };
+
+    setCart(updatedCart);
+  }
+
+  function decreaseQuantity(index) {
+    const updatedCart = [...cart];
+
+    if (updatedCart[index].quantity > 1) {
+      updatedCart[index] = {
+        ...updatedCart[index],
+        quantity: updatedCart[index].quantity - 1,
+      };
+
+      setCart(updatedCart);
+    } else {
+      setDeleteIndex(index);
+      setOpenModal(true);
     }
+  }
 
-    function decreaseQuantity(index) {
-        let updatedCart = [...cart];
+  function confirmDelete() {
+    const updatedCart = [...cart];
 
-        if (updatedCart[index].quantity > 1) {
-            updatedCart[index].quantity -= 1;
-        } else {
-            // Instead of deleting immediately, open the confirmation modal
-            setDeleteIndex(index);
-            setOpenModal(true);
-            return; 
-        }
+    updatedCart.splice(deleteIndex, 1);
 
-        setCart(updatedCart);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-    }
+    setCart(updatedCart);
+    setOpenModal(false);
+    setDeleteIndex(null);
+  }
 
-    function confirmDelete() {
-        let updatedCart = [...cart];
-        // Remove item after confirmation
-        updatedCart.splice(deleteIndex, 1); 
+  function closeDeleteModal() {
+    setOpenModal(false);
+    setDeleteIndex(null);
+  }
 
-        setCart(updatedCart);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+  return (
+    <div className="mt-14 min-h-screen bg-gray-900 p-6 font-italian font-bold text-white">
+      <h3 className="mb-6 text-center text-3xl font-semibold">
+        Shopping Cart
+      </h3>
 
-        setOpenModal(false);
-        setDeleteIndex(null);
-    }
+      {cart.length === 0 ? (
+        <p className="text-center text-gray-400">Your cart is empty.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full table-fixed border border-gray-700 text-center">
+            <colgroup>
+              <col className="w-2/5" />
+              <col className="w-1/5" />
+              <col className="w-1/5" />
+              <col className="w-1/5" />
+            </colgroup>
 
-    return (
-        <div className="font-italian font-bold p-6 bg-gray-900 text-white min-h-screen mt-14">
-            <h3 className="text-3xl text-center font-semibold mb-6 text-white-400">Shopping Cart</h3>
+            <thead>
+              <tr className="bg-gray-800 text-white">
+                <th className="border border-gray-700 p-3">Item</th>
+                <th className="border border-gray-700 p-3">Price</th>
+                <th className="border border-gray-700 p-3">Quantity</th>
+                <th className="border border-gray-700 p-3">Total</th>
+              </tr>
+            </thead>
 
-            {cart.length === 0 ? (
-                <p className="text-center text-gray-400">Your cart is empty.</p>
-            ) : (
-                <table className="w-full border border-gray-700 text-center">
-                    <thead>
-                        <tr className="bg-gray-800 text-white">
-                            <th className="p-3 border border-gray-700">Item</th>
-                            <th className="p-3 border border-gray-700">Price</th>
-                            <th className="p-3 border border-gray-700">Quantity</th>
-                            <th className="p-3 border border-gray-700">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cart.map((item, index) => (
-                            <tr key={index} className="border border-gray-700">
-                                <td className="p-3">{item.name}</td>
-                                <td className="p-3 text-white-400 font-semibold">£{item.price.toFixed(2)}</td>
-                                <td className="p-3">
-                                    <QuantityAdjuster
-                                        quantity={item.quantity}
-                                        increaseQuantity={() => increaseQuantity(index)}
-                                        decreaseQuantity={() => decreaseQuantity(index)}
-                                    />
-                                </td>
-                                <td className="p-3 text-white-400 font-semibold">
-                                    £{(item.price * item.quantity).toFixed(2)}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+            <tbody>
+              {cart.map((item, index) => (
+                <tr
+                  key={`${item.name}-${index}`}
+                  className="border border-gray-700"
+                >
+                  <td className="p-3">{item.name}</td>
 
-            <div className="mt-6 text-right">
-                <h4 className="text-2xl font-semibold text-white-400">Total: £{calcTotalPrice().toFixed(2)}</h4>
-                <button className="mt-4 bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 shadow-md">
-                    Proceed to Checkout
-                </button>
-            </div>
+                  <td className="p-3 font-semibold">
+                    £{item.price.toFixed(2)}
+                  </td>
 
-            <ConfirmDeleteItemModal
-                open={openModal}
-                handleClose={() => setOpenModal(false)}
-                handleConfirm={confirmDelete}
-            />
+                  <td className="p-3">
+                    <div className="mx-auto flex w-28 items-center justify-center">
+                      <QuantityAdjuster
+                        quantity={item.quantity}
+                        increaseQuantity={() => increaseQuantity(index)}
+                        decreaseQuantity={() => decreaseQuantity(index)}
+                      />
+                    </div>
+                  </td>
+
+                  <td className="p-3 font-semibold">
+                    £{(item.price * item.quantity).toFixed(2)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-    );
+      )}
+
+      {cart.length > 0 && (
+        <div className="mt-6 text-right">
+          <h4 className="text-2xl font-semibold">
+            Total: £{calcTotalPrice().toFixed(2)}
+          </h4>
+
+          <button
+            type="button"
+            className="mt-4 rounded-lg bg-red-500 px-6 py-2 text-white shadow-md transition-colors duration-200 hover:bg-red-600"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
+      )}
+
+      <ConfirmDeleteItemModal
+        open={openModal}
+        handleClose={closeDeleteModal}
+        handleConfirm={confirmDelete}
+      />
+    </div>
+  );
 }
