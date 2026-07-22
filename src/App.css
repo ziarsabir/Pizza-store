@@ -1,105 +1,141 @@
 #Nav-bar {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 5em;
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
   background-color: red;
   color: white;
-  height: 5em;
-  display: flex; 
-  /* Distribute space evenly */
-  justify-content: space-around; 
-  /* Vertically center items */
-  align-items: center; 
-  /* Add padding to prevent edge overflow */
-  padding: 0 1em; 
-  /* Include padding in element width */
-  box-sizing: border-box; 
 }
 
 #Hero-section {
-  background-color: green ;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background-color: green;
 }
 
 #Socials {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  padding: 1em 2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
   background-color: white;
   color: black;
-  height: auto; 
-  display: flex; 
-  justify-content: space-around; 
-  align-items: center; 
-  padding: 1em 2em; 
-  box-sizing: border-box; 
-  text-align: center; 
+  text-align: center;
 }
 
 #Socials .col {
-  flex: 1; 
-  margin: 0 1em; 
+  flex: 1;
+  min-width: 0;
+  margin: 0 1em;
 }
 
 #Socials h4 {
-  margin: 0.5em 0; 
+  margin: 0.5em 0;
   font-size: 1.1em;
 }
 
 #Socials p {
-  margin: 0; 
-  font-size: 0.9em; 
+  margin: 0;
+  font-size: 0.9em;
 }
 
 #About {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 20em;
   background-color: red;
-  color: white ;
-  min-height: 20em ;
+  color: white;
 }
 
 #Specials {
-  background-color: white ;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 30em;
+  background-color: white;
   color: black;
-  height: 30em ;
 }
 
+/*
+  Do not set a background colour here.
+  The Menu component uses Tailwind's bg-gray-900 class.
+*/
 #Menu {
-  background-color: red ;
-  
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 #Services {
-  background-color: green
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background-color: green;
 }
 
 #Socialising-images {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 20em;
   background-color: green;
   color: white;
-  height: 20em ;
 }
 
 #Stats {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 10em;
   background-color: white;
   color: black;
-  height: 10em;
 }
 
 #Blog {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   background-color: red;
-  
 }
 
 #Contact-form {
-  background-color: green; 
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 20em;
+  background-color: green;
   color: white;
-  height: 20em ;
 }
 
 #Footer {
-  background-color: white;
-  color: black;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 2em 1em;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   box-sizing: border-box;
+  background-color: white;
+  color: black;
 }
 
 #Footer .col {
   flex: 1 1 25%;
+  min-width: 0;
   margin: 1em;
 }
 
@@ -109,31 +145,52 @@
   text-transform: uppercase;
 }
 
-#Footer p, #Footer ul, #Footer li {
+#Footer p,
+#Footer ul,
+#Footer li {
   margin: 0.3em 0;
   font-size: 0.9em;
 }
 
 #Footer ul {
-  list-style: none;
   padding: 0;
+  list-style: none;
 }
 
 #Footer li {
   margin-bottom: 0.5em;
 }
 
-
 .col {
   display: inline-block;
-  /* Removed fixed width to avoid overflow */
-  width: auto; 
-  /* Center text inside each column */
-  text-align: center; 
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  text-align: center;
 }
 
 .icon-center {
-  margin: auto; 
+  margin: auto;
 }
 
+@media (max-width: 639px) {
+  #Socials {
+    padding: 1em;
+    flex-direction: column;
+    gap: 1.5em;
+  }
 
+  #Socials .col {
+    width: 100%;
+    margin: 0;
+  }
+
+  #Footer {
+    flex-direction: column;
+  }
+
+  #Footer .col {
+    width: 100%;
+    margin: 1em 0;
+  }
+}

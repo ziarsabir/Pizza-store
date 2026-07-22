@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MenuItems from "./MenuItems";
 import MenuObjectsItems from "./MenuObjectsItems";
-import { useNavigate } from "react-router-dom";
 
 const menu = {
   Starters: [
@@ -131,8 +131,8 @@ function Menu({ addToCart }) {
           </button>
         </div>
 
-        <div className="mb-8">
-          <div className="flex flex-wrap justify-center gap-3 font-italian font-bold sm:gap-4">
+        <div className="mb-8 w-full">
+          <div className="mx-auto grid w-full max-w-xl grid-cols-2 gap-3 font-italian font-bold sm:grid-cols-3 lg:grid-cols-5">
             {categories.map((category) => {
               const activeStyles =
                 category === activeCategory
@@ -143,8 +143,8 @@ function Menu({ addToCart }) {
                 <button
                   key={category}
                   type="button"
-                  className={`whitespace-nowrap rounded-lg px-4 py-2 text-base transition-colors duration-200 hover:bg-green-600 sm:px-5 sm:py-3 sm:text-lg ${activeStyles}`}
                   onClick={() => setActiveCategory(category)}
+                  className={`w-full min-w-0 rounded-lg px-2 py-3 text-sm transition-colors duration-200 hover:bg-green-600 sm:px-4 sm:text-base ${activeStyles}`}
                 >
                   {category}
                 </button>
