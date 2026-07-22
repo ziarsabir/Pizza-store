@@ -204,7 +204,7 @@ export default function BookingForm() {
           value={formData.date}
           onChange={handleChange}
           min={today}
-          className="w-full mt-2 p-3 border border-gray-400 rounded bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="mt-2 block w-full max-w-full box-border rounded border border-gray-400 bg-white px-3 py-3 text-gray-900 focus:outline-none border border-gray-400 rounded bg-white text-gray-900 focus:outline-none"
           required
         />
       </div>
