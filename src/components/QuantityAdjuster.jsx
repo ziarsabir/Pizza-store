@@ -1,18 +1,33 @@
 import React from "react";
 
-function QuantityAdjuster({ quantity, increaseQuantity, decreaseQuantity }) {
+function QuantityAdjuster({
+  quantity,
+  increaseQuantity,
+  decreaseQuantity,
+}) {
   return (
-    <div className="flex items-center">
+    <div className="inline-flex items-center overflow-hidden rounded-lg border border-gray-600 bg-gray-900">
       <button
-        className="bg-red-500 px-2 py-1 rounded text-white"
+        type="button"
         onClick={decreaseQuantity}
+        className="flex h-9 w-9 items-center justify-center bg-red-500 text-lg font-bold text-white transition-colors duration-200 hover:bg-red-600"
+        aria-label="Decrease quantity"
       >
-        -
+        −
       </button>
-      <span className="px-2">{quantity}</span>
+
+      <span
+        className="flex h-9 min-w-10 items-center justify-center px-2 text-center text-base font-bold text-white"
+        aria-live="polite"
+      >
+        {quantity}
+      </span>
+
       <button
-        className="bg-green-500 px-2 py-1 rounded text-white"
+        type="button"
         onClick={increaseQuantity}
+        className="flex h-9 w-9 items-center justify-center bg-green-500 text-lg font-bold text-white transition-colors duration-200 hover:bg-green-600"
+        aria-label="Increase quantity"
       >
         +
       </button>

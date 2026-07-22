@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
-  ShoppingCartIcon,
   Bars3Icon,
+  ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
@@ -9,10 +9,6 @@ import { HashLink } from "react-router-hash-link";
 
 function NavBar({ cart, setFormState }) {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
 
   const cartQuantity = cart.reduce(
     (total, item) => total + item.quantity,
@@ -25,13 +21,32 @@ function NavBar({ cart, setFormState }) {
   const mobileLinkStyles =
     "w-full rounded-lg py-3 text-center text-lg transition-colors duration-200 hover:bg-gray-800 hover:text-green-400";
 
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  function scrollToSection(element) {
+    const navbarOffset = 90;
+    const elementPosition =
+      element.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({
+      top: elementPosition - navbarOffset,
+      behavior: "smooth",
+    });
+  }
+
+  function handleFormLink(formType) {
+    setFormState(formType);
+    closeMenu();
+  }
+
   return (
     <nav
       id="Nav-bar"
       className="fixed left-0 top-0 z-50 w-full bg-gray-900 font-italian font-bold text-white shadow-lg"
     >
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-4 py-3 sm:px-6 xl:px-8">
-        {/* Brand */}
         <Link
           to="/"
           onClick={closeMenu}
@@ -40,11 +55,11 @@ function NavBar({ cart, setFormState }) {
           🍕 Papa Z&apos;s Pizza
         </Link>
 
-        {/* Desktop navigation */}
         <div className="hidden items-center gap-10 xl:flex 2xl:gap-12">
           <HashLink
             smooth
             to="/#Menu"
+            scroll={scrollToSection}
             className={desktopLinkStyles}
           >
             Menu
@@ -53,6 +68,7 @@ function NavBar({ cart, setFormState }) {
           <HashLink
             smooth
             to="/#Services"
+            scroll={scrollToSection}
             className={desktopLinkStyles}
           >
             Services
@@ -61,6 +77,7 @@ function NavBar({ cart, setFormState }) {
           <HashLink
             smooth
             to="/#Blog"
+            scroll={scrollToSection}
             className={desktopLinkStyles}
           >
             Blog
@@ -69,6 +86,7 @@ function NavBar({ cart, setFormState }) {
           <HashLink
             smooth
             to="/#About"
+            scroll={scrollToSection}
             className={desktopLinkStyles}
           >
             About Us
@@ -77,6 +95,7 @@ function NavBar({ cart, setFormState }) {
           <HashLink
             smooth
             to="/#LandingPageForm"
+            scroll={scrollToSection}
             className={desktopLinkStyles}
             onClick={() => setFormState("contact-us")}
           >
@@ -86,6 +105,7 @@ function NavBar({ cart, setFormState }) {
           <HashLink
             smooth
             to="/#LandingPageForm"
+            scroll={scrollToSection}
             className={desktopLinkStyles}
             onClick={() => setFormState("booking-form")}
           >
@@ -93,7 +113,6 @@ function NavBar({ cart, setFormState }) {
           </HashLink>
         </div>
 
-        {/* Cart and hamburger */}
         <div className="flex items-center gap-4">
           <Link
             to="/cart"
@@ -112,10 +131,11 @@ function NavBar({ cart, setFormState }) {
 
           <button
             type="button"
-            className="rounded-lg p-1 transition-colors duration-200 hover:bg-gray-800 hover:text-green-400 xl:hidden"
             onClick={() => setMenuOpen((previous) => !previous)}
+            className="rounded-lg p-1 transition-colors duration-200 hover:bg-gray-800 hover:text-green-400 xl:hidden"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
           >
             {menuOpen ? (
               <XMarkIcon className="h-8 w-8" />
@@ -126,13 +146,16 @@ function NavBar({ cart, setFormState }) {
         </div>
       </div>
 
-      {/* Mobile and tablet navigation */}
       {menuOpen && (
-        <div className="border-t border-gray-700 bg-gray-900 px-4 py-4 xl:hidden">
+        <div
+          id="mobile-navigation"
+          className="border-t border-gray-700 bg-gray-900 px-4 py-4 xl:hidden"
+        >
           <div className="mx-auto flex max-w-md flex-col gap-1">
             <HashLink
               smooth
               to="/#Menu"
+              scroll={scrollToSection}
               onClick={closeMenu}
               className={mobileLinkStyles}
             >
@@ -142,6 +165,7 @@ function NavBar({ cart, setFormState }) {
             <HashLink
               smooth
               to="/#Services"
+              scroll={scrollToSection}
               onClick={closeMenu}
               className={mobileLinkStyles}
             >
@@ -151,6 +175,7 @@ function NavBar({ cart, setFormState }) {
             <HashLink
               smooth
               to="/#Blog"
+              scroll={scrollToSection}
               onClick={closeMenu}
               className={mobileLinkStyles}
             >
@@ -160,6 +185,7 @@ function NavBar({ cart, setFormState }) {
             <HashLink
               smooth
               to="/#About"
+              scroll={scrollToSection}
               onClick={closeMenu}
               className={mobileLinkStyles}
             >
@@ -169,11 +195,9 @@ function NavBar({ cart, setFormState }) {
             <HashLink
               smooth
               to="/#LandingPageForm"
+              scroll={scrollToSection}
               className={mobileLinkStyles}
-              onClick={() => {
-                setFormState("contact-us");
-                closeMenu();
-              }}
+              onClick={() => handleFormLink("contact-us")}
             >
               Contact Us
             </HashLink>
@@ -181,11 +205,9 @@ function NavBar({ cart, setFormState }) {
             <HashLink
               smooth
               to="/#LandingPageForm"
+              scroll={scrollToSection}
               className={mobileLinkStyles}
-              onClick={() => {
-                setFormState("booking-form");
-                closeMenu();
-              }}
+              onClick={() => handleFormLink("booking-form")}
             >
               Book a Table
             </HashLink>
