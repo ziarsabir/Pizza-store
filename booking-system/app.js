@@ -4,7 +4,9 @@ const cors = require('cors');
 require('dotenv').config(); 
 
 const bookingRoutes = require('./routes/bookings'); 
+const paymentRoutes = require("./routes/payments");
 const { initializeDatabase } = require('./utils/database'); 
+
 
 const app = express(); 
 
@@ -33,6 +35,7 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/bookings', bookingRoutes); 
+app.use("/api/payments", paymentRoutes);
 
 // Error handling middleware 
 app.use((err, req, res, next) => {

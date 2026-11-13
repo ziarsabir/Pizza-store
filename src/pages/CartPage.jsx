@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import QuantityAdjuster from "../components/QuantityAdjuster";
 import ConfirmDeleteItemModal from "../components/ConfirmDeleteItemModal";
+import { createCheckoutSession } from "../services/paymentApi";
 
 export default function CartPage({ cart, setCart }) {
   const [openModal, setOpenModal] = useState(false);
@@ -66,6 +67,18 @@ export default function CartPage({ cart, setCart }) {
     setOpenModal(false);
     setDeleteIndex(null);
   }
+
+  async function handleCheckout() {
+  try {
+    // Send the current cart to the backend and create a Stripe Checkout Session.
+    const result = await createCheckoutSession(cart);
+
+    // Redirect the browser to Stripe's hosted checkout page.
+    window.location.href = result.url;
+  } catch (error) {
+    console.error("Checkout error:", error);
+  }
+}
 
   return (
     <main className="min-h-screen bg-gray-900 px-4 pb-10 pt-24 font-italian font-bold text-white sm:px-6 lg:px-8">
@@ -209,6 +222,7 @@ export default function CartPage({ cart, setCart }) {
 
               <button
                 type="button"
+                onClick={handleCheckout}
                 className="w-full rounded-lg bg-red-500 px-6 py-3 text-lg text-white shadow-md transition-colors duration-200 hover:bg-red-600 sm:w-auto"
               >
                 Proceed to Checkout

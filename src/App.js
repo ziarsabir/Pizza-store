@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import FullMenu from "./pages/FullMenu";
 import BlogDetails from "./pages/BlogDetails";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
 
 function App() {
   const [cart, setCart] = useState(
@@ -86,6 +87,7 @@ function App() {
             />
           }
         />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
       </Routes>
 
       <Footer />
