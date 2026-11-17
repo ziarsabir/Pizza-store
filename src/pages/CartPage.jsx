@@ -70,16 +70,18 @@ export default function CartPage({ cart, setCart }) {
 
   async function handleCheckout() {
   try {
-    // Send the current cart to the backend and create a Stripe Checkout Session.
     const result = await createCheckoutSession(cart);
 
-    // Redirect the browser to Stripe's hosted checkout page.
-    window.location.href = result.url;
+    console.log("Checkout result:", result);
+
+    // Temporarily stop here so I can inspect the response.
+    return;
+
+    // window.location.href = result.url;
   } catch (error) {
     console.error("Checkout error:", error);
   }
 }
-
   return (
     <main className="min-h-screen bg-gray-900 px-4 pb-10 pt-24 font-italian font-bold text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
