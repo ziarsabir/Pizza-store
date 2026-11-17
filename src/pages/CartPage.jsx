@@ -69,22 +69,18 @@ export default function CartPage({ cart, setCart }) {
   }
 
   async function handleCheckout() {
-  try {
-    const result = await createCheckoutSession(cart);
+    try {
+      const result = await createCheckoutSession(cart);
 
-    console.log("Checkout result:", result);
-
-    // Temporarily stop here so I can inspect the response.
-    return;
-
-    // window.location.href = result.url;
-  } catch (error) {
-    console.error("Checkout error:", error);
+      window.location.href = result.url;
+    } catch (error) {
+      console.error("Checkout error:", error);
+    }
   }
-}
+
   return (
     <main className="min-h-screen bg-gray-900 px-4 pb-10 pt-24 font-italian font-bold text-white sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl px-1 sm:px-2">
         <h1 className="mb-8 text-center text-3xl font-semibold sm:text-4xl">
           Shopping Cart
         </h1>
