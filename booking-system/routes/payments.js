@@ -30,7 +30,7 @@ router.post("/create-checkout-session", async (req, res, next) => {
       // Look up the trusted backend price using the item's name.
       const unitAmount = menuCatalog[item.name];
 
-      // Reject products that do not exist in our backend menu.
+      // Reject products that do not exist in my backend menu.
       if (unitAmount === undefined) {
         const error = new Error(`Unknown menu item: ${item.name}`);
         error.statusCode = 400;
