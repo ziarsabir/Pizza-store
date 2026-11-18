@@ -13,6 +13,8 @@ const router = express.Router();
  */
 router.post("/create-checkout-session", async (req, res, next) => {
   try {
+    // The React frontend sends the current cart in the POST request body,
+    // so Express makes it available here through req.body.
     const { cart } = req.body;
 
     // The cart must be a non-empty array.

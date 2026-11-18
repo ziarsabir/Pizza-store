@@ -22,8 +22,6 @@ export async function createCheckoutSession(cart) {
       cart,
     }
   );
-  
-    console.log("Stripe checkout response:", response.data);
 
   return response.data;
 }
