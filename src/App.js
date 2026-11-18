@@ -87,7 +87,8 @@ function App() {
             />
           }
         />
-        <Route path="/checkout-success" element={<CheckoutSuccess />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess setCart={setCart} />}
+/>
       </Routes>
 
       <Footer />
