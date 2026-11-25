@@ -119,7 +119,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Testing
 
-### Automated booking tests
+### Automated backend tests
 
 Run the backend suite from `booking-system/`. If you already have a backend `.env` with a Stripe key, `npm test` is enough. Otherwise, use this command in a POSIX-compatible shell.
 
@@ -127,13 +127,19 @@ Run the backend suite from `booking-system/`. If you already have a backend `.en
 STRIPE_SECRET_KEY=sk_test_placeholder npm test
 ```
 
-The placeholder lets the Stripe SDK initialise when the Express app imports the payment router. The booking tests send no requests to Stripe, so they need no Stripe account or real credentials.
+The booking tests import the Express app, which loads the Stripe SDK. The placeholder lets the SDK initialise for those tests. The automated suites need no Stripe account or real credentials.
 
-The backend test script runs Jest serially with `NODE_ENV=test`. Supertest sends HTTP requests to the exported Express app without requiring a separate server process. The tests mock JSON storage, and the POST tests also mock validation. The suite covers listing, sorting and filtering bookings, creating bookings and handling validation errors and slot conflicts, and deleting bookings or returning `404` for missing IDs. [Booking tests](booking-system/__tests__)
+The backend test script runs Jest serially with `NODE_ENV=test`. Supertest sends HTTP requests to the exported Express app without requiring a separate server process. The tests mock JSON storage, and the POST tests also mock validation. The suite covers listing, sorting and filtering bookings, creating bookings and handling validation errors and slot conflicts, and deleting bookings or returning `404` for missing IDs.
+
+The [payment route tests](booking-system/__tests__/payments.post.test.js) mock the Stripe SDK. They check that the backend passes the configured key to the SDK, uses catalogue prices and the expected redirect URLs, returns the Checkout URL, and rejects invalid carts before requesting a session. To run just this file from `booking-system/`, use:
+
+```bash
+npm test -- __tests__/payments.post.test.js
+```
 
 ### Manual checkout testing
 
-With both servers running and a sandbox key configured, add an item to the cart and proceed to Stripe Checkout. Complete a test payment with a [Stripe test card](https://docs.stripe.com/testing#cards), then check that the browser lands on `/checkout-success` and that the cart remains empty after a refresh. Try a second checkout and cancel it to confirm that `/cart` retains its items. The current automated suite covers booking routes only.
+With both servers running and a sandbox key configured, add an item to the cart and proceed to Stripe Checkout. Complete a test payment with a [Stripe test card](https://docs.stripe.com/testing#cards), then check that the browser lands on `/checkout-success` and that the cart remains empty after a refresh. Try a second checkout and cancel it to confirm that `/cart` retains its items. The automated suite uses a mock for session creation. The manual check exercises the hosted Stripe page.
 
 ## Project structure
 
@@ -151,4 +157,3 @@ With both servers running and a sandbox key configured, add an item to the cart 
 
 - Verify signed Stripe webhook events and confirm payment status on the server before fulfilling an order. [Stripe Checkout fulfilment](https://docs.stripe.com/checkout/fulfillment)
 - Persist orders and their payment status, and handle repeated events without fulfilling an order twice.
-- Add automated payment-route tests for payload validation, catalogue pricing and Checkout Session creation with Stripe mocked.
